@@ -1,44 +1,80 @@
-import React from 'react'
+"use client"
+import { SetStateAction, useState } from 'react';
 
-function Accordian() {
+const data = [
+  { question: 'How can I reset my password?', answer: 'To reset your password, ...' },
+  { question: 'How do I change my email address?', answer: 'To change your email address, ...' },
+  { question: 'How can I delete my account?', answer: 'To delete your account, ...' },
+  { question: 'What payment methods are accepted?', answer: 'We accept Visa, Mastercard, ...' }
+];
+
+const Accordion = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleAccordion = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index); // Toggle open/close
+  };
+
   return (
     <div>
-        <div className="hs-accordion-group">
-  <div className="hs-accordion active" id="hs-basic-no-arrow-heading-one">
-    <button className="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 focus:outline-none focus:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400" aria-expanded="true" aria-controls="hs-basic-no-arrow-collapse-one">
-      Accordion #1
-    </button>
-    <div id="hs-basic-no-arrow-collapse-one" className="hs-accordion-content w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-no-arrow-heading-one">
-      <p className="text-gray-800 dark:text-neutral-200">
-        <em>This is the third item's accordion body.</em> It is hidden by default, until the collapse plugin adds the appropriate classNamees that we use to style each element. These classNamees control the overall appearance, as well as the showing and hiding via CSS transitions.
-      </p>
+      {data.map((item, index) => (
+        <div
+          key={index}
+          className={`accordion border border-solid border-gray-300 p-4 rounded-xl transition duration-500 mb-8 lg:p-4 ${
+            openIndex === index ? 'accordion-active' : ''
+          }`}
+        >
+          <button
+            className="accordion-toggle group inline-flex items-center justify-between text-left text-lg font-normal leading-8 text-gray-900 w-full transition duration-500 hover:text-indigo-600"
+            aria-controls={`accordion-content-${index}`}
+            onClick={() => toggleAccordion(index)}
+          >
+            <h5>{item.question}</h5>
+            <svg
+              className={`w-6 h-6 text-gray-900 transition duration-500 block group-hover:text-indigo-600 origin-center ${
+                openIndex === index ? 'hidden' : ''
+              }`}
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 12H18M12 18V6"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              ></path>
+            </svg>
+            <svg
+              className={`w-6 h-6 text-gray-900 transition duration-500 hidden group-hover:text-indigo-600 origin-center ${
+                openIndex === index ? 'block' : 'hidden'
+              }`}
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6 12H18"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              ></path>
+            </svg>
+          </button>
+          <div
+            id={`accordion-content-${index}`}
+            className={`accordion-content w-full overflow-hidden pr-4 transition-max-height duration-500 ${
+              openIndex === index ? 'max-h-[16rem]' : 'max-h-0'
+            }`}
+          >
+            <p className="text-base text-gray-900 font-normal leading-6">{item.answer}</p>
+          </div>
+        </div>
+      ))}
     </div>
-  </div>
+  );
+};
 
-  <div className="hs-accordion" id="hs-basic-no-arrow-heading-two">
-    <button className="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 focus:outline-none focus:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400" aria-expanded="true" aria-controls="hs-basic-no-arrow-collapse-two">
-      Accordion #2
-    </button>
-    <div id="hs-basic-no-arrow-collapse-two" className="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-no-arrow-heading-two">
-      <p className="text-gray-800 dark:text-neutral-200">
-        <em>This is the third item's accordion body.</em> It is hidden by default, until the collapse plugin adds the appropriate classNamees that we use to style each element. These classNamees control the overall appearance, as well as the showing and hiding via CSS transitions.
-      </p>
-    </div>
-  </div>
-
-  <div className="hs-accordion" id="hs-basic-no-arrow-heading-three">
-    <button className="hs-accordion-toggle hs-accordion-active:text-blue-600 py-3 inline-flex items-center gap-x-3 w-full font-semibold text-start text-gray-800 hover:text-gray-500 focus:outline-none focus:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400" aria-expanded="false" aria-controls="hs-basic-no-arrow-collapse-three">
-      Accordion #3
-    </button>
-    <div id="hs-basic-no-arrow-collapse-three" className="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300" role="region" aria-labelledby="hs-basic-no-arrow-heading-three">
-      <p className="text-gray-800 dark:text-neutral-200">
-        <em>This is the third item's accordion body.</em> It is hidden by default, until the collapse plugin adds the appropriate classNamees that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions.
-      </p>
-    </div>
-  </div>
-</div>
-    </div>
-  )
-}
-
-export default Accordian
+export default Accordion;

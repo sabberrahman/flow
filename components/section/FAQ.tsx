@@ -1,9 +1,10 @@
 import React from 'react'
 import { FaDotCircle, FaICursor } from 'react-icons/fa'
+import Accordian from '../basic components/Accordian'
 
 function FAQ() {
   return (
-    <div className='bg-[#f9f8f1]'>
+    <div className='bg-[#f9f8f1] h-[56rem]'>
         <div className="wrapper">
             <div className="flex flex-col px-8 py-4 gap-4">
                 
@@ -21,10 +22,14 @@ function FAQ() {
                     <h1>Still have questions?</h1>
                     <p>For assistance, please visit our Contact Us page or call our customer support hotline at (671) 555-0110. Our dedicated team is ready to help you on your journey to a greener, more sustainable future.</p>
                 </div>
+              
 
-                {/* right content */}
-               </div>
-
+               </div >
+               {/* right content */}
+                <div className="col-span-1 ">
+                   <Accordian/>
+                </div>
+                  
               </div>
 
             </div>
